@@ -2,7 +2,7 @@
 namespace dinhub;
 
 class Route {
-    public static $info;
+    public static array $info = [];
 
     public static function craft(string $map, array $routeController) {
         self::$info[] = [
