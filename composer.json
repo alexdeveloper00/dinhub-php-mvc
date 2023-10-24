@@ -1,0 +1,15 @@
+{
+    "authors": [
+        {
+            "name": "Alex Developer",
+            "email": "alexandru.dinu@aplast.com",
+            "role": "Developer"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "dinhub\\": "src/"
+        }
+    }
+}
