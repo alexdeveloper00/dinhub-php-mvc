@@ -9,7 +9,12 @@ class BaseController {
         $incPath = __DIR__ . '/../' . $this->path . $view . '.php';
         $layoutPath = __DIR__ . '/../app/layout/' . $this->layout . '.php';
 
-        if (!file_exists($incPath) || !file_exists($layoutPath)) {
+        if ($this->layout && !file_exists($layoutPath)) {
+            echo "Cannot open layout file";
+            exit;
+        }
+
+        if (!file_exists($incPath)) {
             echo "Cannot open file";
             exit;
         }
@@ -29,7 +34,7 @@ class BaseController {
             echo $content;
         }
     }
-    
+
     public function layout(string | null $layoutName) : void {
         $this->layout = $layoutName;
     }
