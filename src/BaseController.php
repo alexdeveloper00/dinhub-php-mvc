@@ -6,21 +6,30 @@ class BaseController {
     private string | null $layout = null;
 
     public function render(string $view, array | null $data) : void {
+        $incPath = __DIR__ . '/../' . $this->path . $view . '.php';
+        $layoutPath = __DIR__ . '/../app/layout/' . $this->layout . '.php';
+
+        if (!file_exists($incPath) || !file_exists($layoutPath)) {
+            echo "Cannot open file";
+            exit;
+        }
+
         if (null !== $data) {
             extract($data);
         }
 
         ob_start();
-        include __DIR__ . '/../' . $this->path . $view . '.php';
+        include $incPath;
         $content = ob_get_clean();
+        
 
         if ($this->layout) {
-            include __DIR__ . '/../app/layout/' . $this->layout . '.php';
+            include $layoutPath;
         } else {
             echo $content;
         }
     }
-
+    
     public function layout(string | null $layoutName) : void {
         $this->layout = $layoutName;
     }
