@@ -35,6 +35,11 @@ class BaseController {
         }
     }
 
+    public function redirect(string $url) {
+        header('Location: ' . $url, true);
+        die();
+    }
+
     public function layout(string | null $layoutName) : void {
         $this->layout = $layoutName;
     }
