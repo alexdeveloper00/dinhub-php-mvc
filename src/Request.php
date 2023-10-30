@@ -32,7 +32,7 @@ class Request {
         return $returnIfNull;
     }
 
-    public static function post(string $key = null, $returnIfNull = null) : mixed {
+    public static function post(string | null $key = null, $returnIfNull = null) : mixed {
         if (is_null($key)) {
             return $_POST;
         }
