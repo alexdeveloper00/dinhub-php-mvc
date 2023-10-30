@@ -2,12 +2,6 @@
 namespace dinhub;
 
 class Request {
-    private array $rest;
-
-    public function __construct() {
-        $this->rest = (array) json_decode(file_get_contents('php://input'), TRUE);
-    }
-
     public static function isPost() : bool {
         return $_SERVER['REQUEST_METHOD'] === 'POST' ? true : false;
     }
@@ -16,11 +10,7 @@ class Request {
         return $_SERVER['REQUEST_METHOD'] === 'GET' ? true : false;
     }
 
-    public function rest() : array {
-        return $this->rest;
-    }
-
-    public static function get(string | null $key = null, $returnIfNull = null) : mixed {
+    public static function get(string | null $key = null, $returnThisIfNull = null) : mixed {
         if (is_null($key)) {
             return $_GET;
         }
@@ -29,10 +19,10 @@ class Request {
             return $_GET[$key];
         }
 
-        return $returnIfNull;
+        return $returnThisIfNull;
     }
 
-    public static function post(string | null $key = null, $returnIfNull = null) : mixed {
+    public static function post(string | null $key = null, $returnThisIfNull = null) : mixed {
         if (is_null($key)) {
             return $_POST;
         }
@@ -40,11 +30,29 @@ class Request {
         if (isset($_POST[$key])) {
             return $_POST[$key];
         }
-        return $returnIfNull;
+        
+        return $returnThisIfNull;
     }
 
     public static function getHeader(string $headerName) : mixed {
         $headers = getallheaders();
         return isset($headers[$headerName]) ? $headers[$headerName] : false;
     }
+
+    public static function restInput(string | null $key = null) : mixed {
+        $content = (array) json_decode(file_get_contents('php://input'), TRUE);
+        if (!is_array($content) || empty($content)) {
+            return false; // no rest input
+        }
+
+        if (is_null($key)) {
+            return $content;
+        }
+
+        if (isset($content[$key])) {
+            return $content[$key];
+        }
+
+        return false;
+    } 
 }

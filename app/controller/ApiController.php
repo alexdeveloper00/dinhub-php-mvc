@@ -1,21 +1,13 @@
 <?php 
 namespace App\Controller;
 
-use dinhub\RestController;
+use dinhub\Request;
+use dinhub\BaseController;
 
-class ApiController extends RestController {
-    public function getUser() {
-
+class ApiController extends BaseController {
+    public function test() {
         return $this->json([
-            'user' => 'Alex',
-            'name' => 'Developer',
-            'request' => $this->input('ce')
-        ]);
-    }
-
-    public function ok() {
-        return $this->json([
-            'app' => 'o'
+            'dinhub-mvc' => 'is Awesome'
         ]);
     }
 }
