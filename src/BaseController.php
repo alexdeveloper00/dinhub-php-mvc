@@ -24,12 +24,13 @@ class BaseController {
         }
 
         ob_start();
-        include $incPath;
+        ob_implicit_flush(false);
+        require $incPath;
         $content = ob_get_clean();
         
 
         if ($this->layout) {
-            include $layoutPath;
+            require $layoutPath;
         } else {
             echo $content;
         }
