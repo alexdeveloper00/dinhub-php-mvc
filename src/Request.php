@@ -20,7 +20,11 @@ class Request {
         return $this->rest;
     }
 
-    public static function get(string $key, $returnIfNull = null) : mixed {
+    public static function get(string | null $key = null, $returnIfNull = null) : mixed {
+        if (is_null($key)) {
+            return $_GET;
+        }
+
         if (isset($_GET[$key])) {
             return $_GET[$key];
         }
@@ -28,15 +32,19 @@ class Request {
         return $returnIfNull;
     }
 
-    public static function post(string $key, $returnIfNull = null) : mixed {
+    public static function post(string $key = null, $returnIfNull = null) : mixed {
+        if (is_null($key)) {
+            return $_POST;
+        }
+
         if (isset($_POST[$key])) {
             return $_POST[$key];
         }
         return $returnIfNull;
     }
 
-    public static function hasHeader(string $headerName) : bool {
+    public static function getHeader(string $headerName) : mixed {
         $headers = getallheaders();
-        return isset($headers[$headerName]) ? true : false;
+        return isset($headers[$headerName]) ? $headers[$headerName] : false;
     }
 }
